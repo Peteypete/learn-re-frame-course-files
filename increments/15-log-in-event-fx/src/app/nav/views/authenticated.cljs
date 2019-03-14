@@ -36,3 +36,35 @@
                   :href href
                   :dispatch dispatch
                   :active-nav active-nav}])]))
+
+; This is the data I draw and the through it
+[:href href :href "#saved"]  ----> [:href "#saved"]
+
+;Step 1 for over each nav-items and pass to nav-item
+[{:keys [id name href dispatch]} nav-items]
+[nav-item {:key :recipies
+           :id :recipies
+           :name "Recipes"
+           :href "#recipes"
+           :dispatch #(rf/dispatch [:set-active-nav :recipes])
+           :active-nav @(rf/subscribe [:active-nav])}]
+
+;Step 2 build the html component with passed key values
+[{:keys [id href name dispatch active-nav]}]
+[:> Box {:key :recipies
+         :as "a"
+         :href "#recipes"
+         :on-click #(rf/dispatch [:set-active-nav :recipes]) ; final hiccup/html made
+         :ml 2
+         :pb 10
+         :border-bottom (when (= active-nav id) "2px solid #102A43")}
+ name
+
+;Viewing it from reverse, from the component being made.
+ [:on-click dispatch  :dispatch dispatch :dispatch #(rf/dispatch [:set-active-nav :inboxes])] ---->  [:on-click #(rf/dispatch [:set-active-nav :inboxes])]
+;;^from component     ^from for loop     ^from data
+
+
+            [{:keys [id href name dispatch active-nav]}]]        [{:keys [id name href dispatch]} nav-items]
+[:on-click dispatch                      :dispatch dispatch                              :dispatch #(rf/dispatch [:set-active-nav :inboxes])] ---->  [:on-click #(rf/dispatch [:set-active-nav :inboxes])]
+;;^from component                        ^from for loop                                   ^from data
