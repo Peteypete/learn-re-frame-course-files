@@ -34,7 +34,7 @@
                   :id id
                   :name name
                   :href href
-                  :dispatch dispatch
+                  :dispatch-content dispatch
                   :active-nav active-nav}])]))
 
 ; This is the data I draw and the through it
@@ -66,5 +66,10 @@
 
 
             [{:keys [id href name dispatch active-nav]}]]        [{:keys [id name href dispatch]} nav-items]
-[:on-click dispatch                      :dispatch dispatch                              :dispatch #(rf/dispatch [:set-active-nav :inboxes])] ---->  [:on-click #(rf/dispatch [:set-active-nav :inboxes])]
+[:on-click dispatch                      :dispatch-content dispatch                              :dispatch #(rf/dispatch [:set-active-nav :inboxes])] ---->  [:on-click #(rf/dispatch [:set-active-nav :inboxes])]
+;;^from component                        ^from for loop                                   ^from data
+
+
+[{:keys [id href name dispatch-content active-nav]}]        [{:keys [id name href dispatch]} nav-items]
+[:on-click dispatch-content                      :dispatch-content dispatch                              :dispatch #(rf/dispatch [:set-active-nav :inboxes])] ---->  [:on-click #(rf/dispatch [:set-active-nav :inboxes])]
 ;;^from component                        ^from for loop                                   ^from data
